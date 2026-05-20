@@ -1,20 +1,5 @@
 export const PROJECTS = [
   {
-    id: "noorfit",
-    title: "NoorFit",
-    description:
-      "Fitness and wellness platform with workout tracking, nutrition insights, and personalized health dashboards.",
-    category: "MERN",
-    featured: true,
-    size: "large",
-    tech: ["React", "Node.js", "MongoDB", "Tailwind"],
-    github: "https://github.com/musharraf10",
-    live: "#",
-    image:
-      "linear-gradient(135deg, #EEF0FF 0%, #F8FAFC 50%, #E8EAFF 100%)",
-    accent: "#5B5BF7",
-  },
-  {
     id: "focusvault",
     title: "FocusVault",
     description:
@@ -25,8 +10,7 @@ export const PROJECTS = [
     tech: ["React", "Framer Motion", "Tailwind"],
     github: "https://github.com/musharraf10",
     live: "#",
-    image:
-      "linear-gradient(135deg, #F0FDF4 0%, #F8FAFC 50%, #ECFDF5 100%)",
+    image: "./svg/focusvault.png",
     accent: "#10B981",
   },
   {
@@ -40,9 +24,22 @@ export const PROJECTS = [
     tech: ["React", "Node.js", "Socket.io", "WebRTC"],
     github: "https://github.com/musharraf10",
     live: "#",
-    image:
-      "linear-gradient(135deg, #FFF7ED 0%, #F8FAFC 50%, #FFEDD5 100%)",
+    image: "./svg/videocall.png",
     accent: "#F59E0B",
+  },
+  {
+    id: "noorfit",
+    title: "NoorFit",
+    description:
+      "Fitness and wellness platform with workout tracking, nutrition insights, and personalized health dashboards.",
+    category: "MERN",
+    featured: true,
+    size: "large",
+    tech: ["React", "Node.js", "MongoDB", "Tailwind"],
+    github: "https://github.com/musharraf10",
+    live: "#",
+    image: "./svg/noorfit.png",
+    accent: "#5B5BF7",
   },
   {
     id: "task-api",
@@ -55,8 +52,7 @@ export const PROJECTS = [
     tech: ["Node.js", "Express", "MongoDB"],
     github: "https://github.com/musharraf10",
     live: "#",
-    image:
-      "linear-gradient(135deg, #FDF4FF 0%, #F8FAFC 50%, #FAE8FF 100%)",
+    image: "linear-gradient(135deg, #FDF4FF 0%, #F8FAFC 50%, #FAE8FF 100%)",
     accent: "#A855F7",
   },
   {
@@ -70,8 +66,7 @@ export const PROJECTS = [
     tech: ["Java", "MySQL", "JDBC"],
     github: "https://github.com/musharraf10",
     live: "#",
-    image:
-      "linear-gradient(135deg, #EFF6FF 0%, #F8FAFC 50%, #DBEAFE 100%)",
+    image: "linear-gradient(135deg, #EFF6FF 0%, #F8FAFC 50%, #DBEAFE 100%)",
     accent: "#3B82F6",
   },
   {
@@ -85,8 +80,7 @@ export const PROJECTS = [
     tech: ["React", "Tailwind", "Framer Motion"],
     github: "https://github.com/musharraf10",
     live: "#",
-    image:
-      "linear-gradient(135deg, #EEF0FF 0%, #FFFFFF 50%, #F8FAFC 100%)",
+    image: "linear-gradient(135deg, #EEF0FF 0%, #FFFFFF 50%, #F8FAFC 100%)",
     accent: "#5B5BF7",
   },
 ];

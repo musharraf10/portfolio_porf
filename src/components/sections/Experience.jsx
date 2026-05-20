@@ -153,8 +153,9 @@ export function Experience() {
               }}
               transition={{
                 type: "spring",
-                stiffness: 70,
-                damping: 18,
+                stiffness: 45,
+                damping: 20,
+                mass: 1.2,
               }}
               className="relative"
             >

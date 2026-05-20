@@ -11,14 +11,14 @@ export function useGitHubRepos() {
 
     async function fetchRepos() {
       try {
-        const res = await fetch(`${SITE.githubApi}/repos?sort=updated&per_page=12`);
+        const res = await fetch(`${SITE.githubApi}/repos?sort=updated`);
         if (!res.ok) throw new Error("Failed to fetch repositories");
         const data = await res.json();
         if (!cancelled) {
           setRepos(
             data
               .filter((r) => !r.fork)
-              .sort((a, b) => b.stargazers_count - a.stargazers_count)
+              .sort((a, b) => b.stargazers_count - a.stargazers_count),
           );
         }
       } catch (err) {

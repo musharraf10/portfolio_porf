@@ -1,0 +1,87 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg-primary: #ffffff;
+  --color-bg-secondary: #f8fafc;
+  --color-border: #eaeaea;
+  --color-text-primary: #111111;
+  --color-text-secondary: #666666;
+  --color-accent: #5b5bf7;
+  --color-accent-light: #eef0ff;
+  --font-sans: "Inter", system-ui, sans-serif;
+  --shadow-soft: 0 4px 24px -4px rgba(17, 17, 17, 0.06);
+  --shadow-card: 0 8px 32px -8px rgba(17, 17, 17, 0.08);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background-color: var(--color-accent-light);
+  color: var(--color-accent);
+}
+
+.section-container {
+  @apply mx-auto w-full max-w-7xl px-6 lg:px-8;
+}
+
+.glass-nav {
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+
+  border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+
+  box-shadow:
+    0 4px 20px rgba(15, 23, 42, 0.04),
+    0 1px 2px rgba(15, 23, 42, 0.06);
+
+  transition:
+    background 0.3s ease,
+    backdrop-filter 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.card-premium {
+  background: #ffffff;
+  border: 1px solid var(--color-border);
+  border-radius: 1rem;
+  box-shadow: var(--shadow-soft);
+  transition:
+    box-shadow 0.3s ease,
+    transform 0.3s ease;
+}
+
+.card-premium:hover {
+  box-shadow: var(--shadow-card);
+}
+
+.btn-primary {
+  @apply inline-flex items-center justify-center gap-2 rounded-xl bg-accent px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:opacity-90 hover:shadow-lg;
+}
+
+.btn-secondary {
+  @apply inline-flex items-center justify-center gap-2 rounded-xl border border-border bg-white px-6 py-3 text-sm font-semibold text-text-primary transition-all duration-300 hover:border-accent hover:text-accent;
+}
+
+.badge {
+  @apply inline-flex items-center rounded-full border border-border bg-bg-secondary px-3 py-1 text-xs font-medium text-text-secondary;
+}
+
+.horizontal-scroll {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.horizontal-scroll::-webkit-scrollbar {
+  display: none;
+}

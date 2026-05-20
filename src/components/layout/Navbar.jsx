@@ -60,7 +60,7 @@ export function Navbar() {
                   delay: index * 0.1,
                 },
               }}
-              className="inline-block underline decoration-wavy decoration-2 underline-offset-4 decoration-teal-500"
+              className="inline-block"
             >
               {char === " " ? "\u00A0" : char}
             </motion.span>

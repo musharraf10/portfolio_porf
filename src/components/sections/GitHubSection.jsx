@@ -1,167 +1,439 @@
 import { motion } from "framer-motion";
-import { FiStar, FiGitBranch } from "react-icons/fi";
+import {
+  FiArrowUpRight,
+  FiGitBranch,
+  FiStar,
+} from "react-icons/fi";
+
 import { SectionHeader } from "../ui/SectionHeader";
-import { StaggerContainer, StaggerItem, FadeUp } from "../ui/FadeUp";
-import { GitHubIllustration } from "../illustrations/GitHubIllustration";
-import { useGitHubRepos, formatDate, inferTechStack } from "../../hooks/useGitHubRepos";
-import { TOP_LANGUAGES, SITE } from "../../data/constants";
+import {
+  StaggerContainer,
+  StaggerItem,
+} from "../ui/FadeUp";
 
-function ContributionGraph() {
-  const weeks = 26;
-  const days = 7;
-  const levels = [0, 1, 2, 3, 4];
+import {
+  useGitHubRepos,
+  formatDate,
+  inferTechStack,
+} from "../../hooks/useGitHubRepos";
 
-  const cells = Array.from({ length: weeks * days }, (_, i) => {
-    const level = levels[(i * 7 + (i % 5)) % levels.length];
-    const opacity = [0.08, 0.2, 0.4, 0.65, 1][level];
-    return { i, opacity };
-  });
-
-  return (
-    <div className="overflow-x-auto">
-      <div
-        className="inline-grid gap-1"
-        style={{ gridTemplateColumns: `repeat(${weeks}, 12px)`, gridTemplateRows: `repeat(7, 12px)` }}
-      >
-        {cells.map(({ i, opacity }) => (
-          <motion.div
-            key={i}
-            className="h-3 w-3 rounded-sm bg-accent"
-            style={{ opacity }}
-            initial={{ scale: 0 }}
-            whileInView={{ scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: (i % 20) * 0.01, duration: 0.2 }}
-          />
-        ))}
-      </div>
-      <p className="mt-3 text-xs text-text-secondary">Contribution activity (visual overview)</p>
-    </div>
-  );
-}
+import { SITE } from "../../data/constants";
 
 export function GitHubSection() {
   const { repos, loading, error } = useGitHubRepos();
-  const pinned = repos.slice(0, 6);
+
+  const pinnedRepos = repos.slice(0, 3);
+
+  const recentRepos = [...repos]
+    .sort(
+      (a, b) =>
+        new Date(b.updated_at) -
+        new Date(a.updated_at)
+    )
+    .slice(0, 4);
+
+  const totalStars = repos.reduce(
+    (sum, repo) => sum + repo.stargazers_count,
+    0
+  );
+
+  const totalForks = repos.reduce(
+    (sum, repo) => sum + repo.forks_count,
+    0
+  );
 
   return (
-    <section id="github" className="relative flex min-h-screen items-center overflow-hidden bg-bg-secondary py-24">
-      <div className="pointer-events-none absolute right-0 top-1/4 opacity-30">
-        <GitHubIllustration />
-      </div>
+    <section
+      id="github"
+      className="
+        relative
+        overflow-hidden
+        bg-gradient-to-b
+        from-white
+        via-slate-50/40
+        to-white
+        py-24
+      "
+    >
+      {/* glow bg */}
+      <div className="absolute left-0 top-0 h-72 w-72 rounded-full bg-blue-100/30 blur-3xl" />
+
 
       <div className="section-container relative z-10">
-        <SectionHeader
-          badge="GitHub"
-          title="Open source & continuous building."
-          description="Live data from my public repositories — explore what I'm shipping and maintaining."
-        />
 
-        <motion.div className="mt-12 grid gap-6 lg:grid-cols-3">
-          <FadeUp className="card-premium p-6 lg:col-span-2">
-            <h3 className="mb-4 text-sm font-semibold text-text-primary">Contribution Graph</h3>
-            <ContributionGraph />
-          </FadeUp>
+        {/* HEADER */}
+        <div className="grid items-center gap-10 lg:grid-cols-[1fr_420px]">
 
-          <FadeUp delay={0.1} className="card-premium p-6">
-            <h3 className="mb-4 text-sm font-semibold text-text-primary">Top Languages</h3>
-            <ul className="space-y-4">
-              {TOP_LANGUAGES.map((lang) => (
-                <li key={lang.name}>
-                  <motion.div className="flex justify-between text-sm mb-1.5">
-                    <span className="text-text-primary">{lang.name}</span>
-                    <span className="text-text-secondary">{lang.percent}%</span>
-                  </motion.div>
-                  <div className="h-1.5 overflow-hidden rounded-full bg-bg-secondary">
-                    <motion.div
-                      className="h-full rounded-full"
-                      style={{ backgroundColor: lang.color, width: `${lang.percent}%` }}
-                      initial={{ width: 0 }}
-                      whileInView={{ width: `${lang.percent}%` }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 0.8, ease: "easeOut" }}
-                    />
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </FadeUp>
-        </motion.div>
+          <div>
+            <SectionHeader
+              badge="GitHub"
+              title="Open source & continuous building."
+              description="Real-time GitHub repositories, technologies, and project activity directly fetched from my public profile."
+            />
 
-        <motion.div className="mt-6 grid gap-4 sm:grid-cols-3">
-          {[
-            { label: "Public Repos", value: loading ? "—" : repos.length },
-            { label: "Total Stars", value: loading ? "—" : repos.reduce((s, r) => s + r.stargazers_count, 0) },
-            { label: "Profile", value: "@musharraf10" },
-          ].map((stat, i) => (
-            <FadeUp key={stat.label} delay={i * 0.05} className="card-premium p-5 text-center">
-              <p className="text-2xl font-bold text-text-primary">{stat.value}</p>
-              <p className="mt-1 text-sm text-text-secondary">{stat.label}</p>
-            </FadeUp>
-          ))}
-        </motion.div>
+          </div>
 
-        <div className="mt-10">
-          <div className="mb-6 flex items-center justify-between">
-            <h3 className="text-lg font-semibold text-text-primary">Pinned Repositories</h3>
+          {/* SVG */}
+          <motion.div
+            animate={{ y: [0, -12, 0] }}
+            transition={{
+              duration: 6,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+            className="hidden lg:block"
+          >
+
+            <div
+              className="
+                overflow-hidden
+                rounded-[2rem]
+                border
+                border-none
+                bg-gradient-to-br
+                from-blue-50
+                via-white
+                to-violet-50
+                p-5
+                opacity-90
+              "
+            >
+              <img
+                src="/svg/github.svg"
+                alt="GitHub"
+                className="scale-110 object-contain"
+              />
+            </div>
+          </motion.div>
+        </div>
+
+        {/* PINNED REPOS */}
+        <div className="mt-5">
+          <div className="mb-8 flex items-center justify-between">
+            <div>
+              <p className="text-sm font-medium text-accent">Featured Work</p>
+              <h3 className="mt-1 text-3xl font-bold tracking-tight text-text-primary">
+                Pinned Repositories
+              </h3>
+            </div>
+
             <a
               href={SITE.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-sm font-medium text-accent hover:opacity-80"
+              className="hidden items-center gap-2 text-sm font-semibold text-accent hover:opacity-80 sm:flex"
             >
-              View profile →
+              Visit GitHub <FiArrowUpRight />
             </a>
           </div>
 
-          {loading && (
-            <p className="text-text-secondary">Loading repositories...</p>
-          )}
-          {error && (
-            <p className="text-text-secondary">
-              Unable to load repos.{" "}
-              <a href={SITE.github} className="text-accent underline">
-                Visit GitHub
-              </a>
-            </p>
-          )}
+          {loading && <p className="text-text-secondary">Loading repositories...</p>}
+          {error && <p className="text-text-secondary">Failed to load repositories.</p>}
 
-          <StaggerContainer className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {pinned.map((repo) => (
+          <StaggerContainer className="grid gap-6 lg:grid-cols-3">
+            {pinnedRepos.map((repo, index) => (
               <StaggerItem key={repo.id}>
                 <motion.a
                   href={repo.html_url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="card-premium block h-full p-5 transition-colors hover:border-accent/30"
-                  whileHover={{ y: -3 }}
+                  whileHover={{ y: -5 }}
+                  transition={{ duration: 0.25 }}
+                  className="
+                    group
+                    relative
+                    block
+                    overflow-hidden
+                    rounded-[2rem]
+                    border 
+                    border-slate-200
+                    bg-white                  /* ← Fixed: Stronger background */
+                    p-6
+                    shadow-md                  /* ← Better shadow */
+                    transition-all duration-300
+                    hover:shadow-2xl
+                    hover:-translate-y-1
+                  "
                 >
-                  <div className="flex items-start justify-between gap-2">
-                    <FiGitBranch className="h-4 w-4 shrink-0 text-accent" />
-                    <span className="flex items-center gap-1 text-xs text-text-secondary">
-                      <FiStar className="h-3 w-3" />
-                      {repo.stargazers_count}
-                    </span>
-                  </div>
-                  <h4 className="mt-3 font-semibold text-text-primary">{repo.name}</h4>
-                  <p className="mt-2 line-clamp-2 text-sm text-text-secondary">
-                    {repo.description || "No description provided."}
-                  </p>
-                  <div className="mt-4 flex flex-wrap gap-2">
-                    {inferTechStack(repo).map((t) => (
-                      <span key={t} className="badge text-xs">
-                        {t}
+
+                  {/* hover bg */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-blue-50/30 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+
+                  <div className="relative">
+
+                    {/* top */}
+                    <div className="flex items-start justify-between">
+
+                      <div
+                        className={`
+                          flex
+                          h-14
+                          w-14
+                          items-center
+                          justify-center
+                          rounded-2xl
+                          text-white
+                          ${index === 0
+                            ? "bg-slate-900"
+                            : index === 1
+                              ? "bg-violet-500"
+                              : "bg-blue-500"
+                          }
+                        `}
+                      >
+                        {repo.name.charAt(0).toUpperCase()}
+                      </div>
+
+                      <FiArrowUpRight className="text-slate-400 transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1" />
+                    </div>
+
+                    {/* title */}
+                    <h4 className="mt-5 text-2xl font-bold tracking-tight text-text-primary">
+                      {repo.name}
+                    </h4>
+
+                    {/* desc */}
+                    <p className="mt-3 text-sm leading-relaxed text-text-secondary">
+                      {repo.description ||
+                        "No description available."}
+                    </p>
+
+                    {/* tech stack */}
+                    <div className="mt-6 flex flex-wrap gap-2">
+
+                      {inferTechStack(repo)
+                        .slice(0, 4)
+                        .map((tech) => (
+                          <span
+                            key={tech}
+                            className="
+                              rounded-full
+                              bg-slate-100
+                              px-3
+                              py-1
+                              text-xs
+                              font-medium
+                              text-slate-700
+                            "
+                          >
+                            {tech}
+                          </span>
+                        ))}
+                    </div>
+
+                    {/* bottom */}
+                    <div className="mt-8 flex items-center justify-between text-sm text-slate-400">
+
+                      <div className="flex items-center gap-5">
+
+                        <span className="flex items-center gap-1">
+                          <FiStar className="h-4 w-4" />
+                          {repo.stargazers_count}
+                        </span>
+
+                        <span className="flex items-center gap-1">
+                          <FiGitBranch className="h-4 w-4" />
+                          {repo.forks_count}
+                        </span>
+                      </div>
+
+                      <span>
+                        {formatDate(repo.updated_at)}
                       </span>
-                    ))}
+                    </div>
                   </div>
-                  <p className="mt-3 text-xs text-text-secondary">
-                    Updated {formatDate(repo.updated_at)}
-                  </p>
                 </motion.a>
               </StaggerItem>
             ))}
           </StaggerContainer>
         </div>
+
+        {/* RECENT ACTIVITY */}
+        <div className="mt-20">
+
+          <div className="mb-8">
+            <p className="text-sm font-medium text-accent">
+              Latest Updates
+            </p>
+
+            <h3 className="mt-1 text-3xl font-bold tracking-tight text-text-primary">
+              Recently Updated
+            </h3>
+          </div>
+
+          <div className="grid gap-5 lg:grid-cols-2">
+
+            {recentRepos.map((repo) => (
+              <motion.a
+                key={repo.id}
+                href={repo.html_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ y: -3 }}
+                className="
+                  group
+                  rounded-[2rem]
+                  border
+                  border-slate-200/70
+                  bg-white/80
+                  p-6
+                  shadow-sm
+                  transition-all
+                  duration-300
+                  hover:shadow-lg
+                "
+              >
+
+                <div className="flex items-start justify-between gap-4">
+
+                  <div className="min-w-0">
+
+                    <div className="flex items-center gap-3">
+
+                      <div
+                        className="
+                          h-3
+                          w-3
+                          rounded-full
+                          bg-emerald-500
+                        "
+                      />
+
+                      <p className="truncate text-lg font-semibold text-text-primary">
+                        {repo.name}
+                      </p>
+                    </div>
+
+                    <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-text-secondary">
+                      {repo.description ||
+                        "No description available."}
+                    </p>
+
+                    <div className="mt-4 flex flex-wrap gap-2">
+
+                      {inferTechStack(repo)
+                        .slice(0, 3)
+                        .map((tech) => (
+                          <span
+                            key={tech}
+                            className="
+                              rounded-full
+                              bg-slate-100
+                              px-3
+                              py-1
+                              text-xs
+                              font-medium
+                              text-slate-600
+                            "
+                          >
+                            {tech}
+                          </span>
+                        ))}
+                    </div>
+                  </div>
+
+                  <FiArrowUpRight className="shrink-0 text-slate-400 transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1" />
+                </div>
+
+                <div className="mt-6 flex items-center justify-between border-t border-slate-100 pt-4 text-sm text-slate-400">
+
+                  <div className="flex items-center gap-5">
+
+                    <span className="flex items-center gap-1">
+                      <FiStar className="h-4 w-4" />
+                      {repo.stargazers_count}
+                    </span>
+
+                    <span className="flex items-center gap-1">
+                      <FiGitBranch className="h-4 w-4" />
+                      {repo.forks_count}
+                    </span>
+                  </div>
+
+                  <span>
+                    Updated {formatDate(repo.updated_at)}
+                  </span>
+                </div>
+              </motion.a>
+            ))}
+          </div>
+        </div>
+
+        {/* CTA */}
+        <motion.div
+          whileHover={{ y: -2 }}
+          className="
+            mt-10
+            overflow-hidden
+            rounded-[2.5rem]
+            border
+            border-slate-200/70
+            bg-gradient-to-r
+            from-white
+            via-blue-50/40
+            to-violet-50/40
+            p-8
+            shadow-sm
+          "
+        >
+
+          <div className="flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
+
+            <div className="flex items-center gap-5">
+
+              <div
+                className="
+                  flex
+                  h-14
+                  w-16
+                  items-center
+                  justify-center
+                  rounded-xl
+                  bg-white
+                  text-3xl
+                "
+              >
+                🚀
+              </div>
+
+              <div>
+                <h3 className="text-2xl font-bold text-text-primary">
+                  Explore More Projects
+                </h3>
+
+                <p className="mt-1 text-text-secondary">
+                  Visit my GitHub profile to explore all repositories and ongoing work.
+                </p>
+              </div>
+            </div>
+
+            <a
+              href={SITE.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="
+                inline-flex
+                items-center
+                justify-center
+                gap-3
+                rounded-2xl
+                bg-[#4F6BFF]
+                px-8
+                py-4
+                text-sm
+                font-semibold
+                text-white
+                shadow-lg
+                transition-all
+                duration-300
+                hover:scale-[1.02]
+              "
+            >
+              Open GitHub
+              <FiArrowUpRight />
+            </a>
+          </div>
+        </motion.div>
       </div>
     </section>
   );

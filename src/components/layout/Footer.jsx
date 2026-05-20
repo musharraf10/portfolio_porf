@@ -28,7 +28,7 @@ export function Footer() {
             </a>
           ))}
         </div>
-        <p className="text-sm text-text-secondary">Built with React & Tailwind</p>
+        <p className="text-sm text-text-secondary">I built this portfolio to showcase my skills, projects, and growth as a developer. The design and development process was supported with the help of AI tools like ChatGPT and Grok for brainstorming, refinement, and productivity.</p>
       </div>
     </footer>
   );

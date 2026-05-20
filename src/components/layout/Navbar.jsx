@@ -77,14 +77,6 @@ export function Navbar() {
               {link.label}
             </a>
           ))}
-          <a
-            href={SITE.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-sm font-medium text-text-secondary transition-colors hover:text-accent"
-          >
-            GitHub
-          </a>
           <a href={SITE.resume} className="btn-primary !py-2.5 !px-4 text-xs">
             <FiDownload className="h-4 w-4" />
             Resume

@@ -109,20 +109,20 @@ export function About() {
             description="I'm Shaik Musharaf, a MERN Stack developer focused on creating modern web applications with practical functionality and thoughtful user experiences."
           />
 
-          <div className="mt-8 space-y-3 leading-relaxed text-text-secondary">
+          <div className="mt-8 space-y-4 leading-relaxed text-slate-500">
             <p>
-              I completed my B.Tech in Information Technology in 2024 and started my journey into full stack development through the MERN stack.
-              While building projects, I explored concepts like authentication, payment integration, WebSockets, and scalable backend architecture.
+              I completed my <span className="font-semibold text-slate-800">B.Tech in Information Technology</span> in 2024 and started my journey into full stack development through the <span className="font-medium text-blue-600">MERN stack</span>.
+              While building projects, I explored concepts like <span className="text-slate-700">authentication, payment integration, WebSockets</span>, and <span className="font-medium text-blue-600">scalable backend architecture</span>.
               Every project helped me improve both technically and creatively.
             </p>
 
-            <p>
-              I also learned Java and Data Structures & Algorithms, which strengthened my problem-solving skills and understanding of core programming concepts.
-              Currently, I’m working as a freelance AI data labeler at Scale AI while continuing to build projects and improve my backend development skills with Node.js.
+            <p className="text-slate-600">
+              I also mastered <span className="font-medium text-blue-600">Java and Data Structures & Algorithms</span>, which strengthened my problem-solving skills and understanding of core programming concepts.
+              Currently, I’m working as a freelance <span className="text-slate-800 font-medium">AI Data Labeler at Scale AI</span> while continuing to build projects and maximize my backend development skills with <span className="font-semibold text-slate-800">Node.js</span>.
             </p>
 
-            <p>
-              Although I don’t have formal industry experience yet, I enjoy building real-world applications, learning deeply, and growing consistently as a developer.
+            <p className="text-slate-400 text-sm italic">
+              Although I don’t have formal industry experience yet, I deeply enjoy building real-world applications, learning deeply, and growing consistently as a developer.
             </p>
           </div>
         </div>

@@ -5,7 +5,8 @@ export const SITE = {
   email: "skmusharaf01@email.com",
   github: "https://github.com/musharraf10",
   linkedin: "https://www.linkedin.com/in/skmusharaf01/",
-  resume: "/resume.pdf",
+  resume:
+    "https://drive.google.com/file/d/1T-rBwDseJnS3flga6X5rqZukHutOHyRA/view?usp=drivesdk",
   githubApi: "https://api.github.com/users/musharraf10",
 };
 
@@ -128,27 +129,46 @@ export const CERTIFICATES = [
     issuer: "KodNest",
     year: "2024",
     color: "#5B5BF7",
+
+    image:
+      "https://res.cloudinary.com/doamhxnjb/image/upload/v1779280568/noorfit/products/r5znzp5lpbyp8x6wzekm.png",
+    link: "https://drive.google.com/file/d/1_j6JuyQFwfPFe2QNWxBTyK0pvUKL6hkN/view?usp=sharing",
   },
+
   {
     id: 2,
     title: "Apna College Delta",
     issuer: "Apna College",
     year: "2024",
     color: "#6366F1",
+
+    image:
+      "https://res.cloudinary.com/doamhxnjb/image/upload/v1779280451/noorfit/products/jutddqf80jhtxajub811.jpg",
+    link: "https://drive.google.com/file/d/1HFMxXfv9PgW3muqzg4SJ3IuV72ekByRL/view?usp=drive_link",
   },
+
   {
     id: 3,
     title: "Apna College Alpha",
     issuer: "Apna College",
     year: "2023",
     color: "#818CF8",
+
+    image:
+      "https://res.cloudinary.com/doamhxnjb/image/upload/v1779280521/noorfit/products/zguag1t3pyb9ek7jxxar.png",
+    link: "https://drive.google.com/file/d/1PRe548HK6FwUBJF8NDz4Vbd_200zkRlu/view?usp=drive_link",
   },
+
   {
     id: 4,
     title: "Appreciation Letter",
     issuer: "NRI Institute",
     year: "2024",
     color: "#A5B4FC",
+
+    image:
+      "https://res.cloudinary.com/doamhxnjb/image/upload/v1779280607/noorfit/products/izac0vabucsibamq5cyo.png",
+    link: "https://drive.google.com/file/d/1lhjjSgAvWADaOEsLgFAVMfYDr4DzW0sr/view?usp=drive_link",
   },
 ];
 

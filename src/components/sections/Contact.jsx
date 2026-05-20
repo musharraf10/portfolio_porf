@@ -1,141 +1,370 @@
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { FaGithub, FaLinkedin, FaEnvelope } from "react-icons/fa";
-import { FiDownload } from "react-icons/fi";
+import { motion } from "framer-motion";
+import {
+  FaGithub,
+  FaLinkedin,
+  FaEnvelope,
+} from "react-icons/fa";
+
+import {
+  FiArrowUpRight,
+  FiDownload,
+} from "react-icons/fi";
+
 import { SectionHeader } from "../ui/SectionHeader";
 import { FadeUp } from "../ui/FadeUp";
 import { ContactIllustration } from "../illustrations/ContactIllustration";
 import { SITE } from "../../data/constants";
 
 const links = [
-  { icon: FaEnvelope, label: "Email", href: `mailto:${SITE.email}`, text: SITE.email },
-  { icon: FaLinkedin, label: "LinkedIn", href: SITE.linkedin, text: "Connect on LinkedIn" },
-  { icon: FaGithub, label: "GitHub", href: SITE.github, text: "@musharraf10" },
+  {
+    icon: FaEnvelope,
+    label: "Email",
+    href: `mailto:${SITE.email}`,
+    text: SITE.email,
+    color: "from-blue-50 to-indigo-50",
+  },
+  {
+    icon: FaLinkedin,
+    label: "LinkedIn",
+    href: SITE.linkedin,
+    text: "Connect professionally",
+    color: "from-sky-50 to-cyan-50",
+  },
+  {
+    icon: FaGithub,
+    label: "GitHub",
+    href: SITE.github,
+    text: "@musharraf10",
+    color: "from-slate-50 to-gray-100",
+  },
 ];
 
 export function Contact() {
-  const [form, setForm] = useState({ name: "", email: "", message: "" });
-  const [submitted, setSubmitted] = useState(false);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setSubmitted(true);
-    setForm({ name: "", email: "", message: "" });
-  };
-
   return (
-    <section id="contact" className="flex min-h-screen items-center bg-bg-secondary py-24">
-      <div className="section-container grid items-center gap-16 lg:grid-cols-2">
-        <div className="order-2 lg:order-1">
-          <ContactIllustration />
-        </div>
+    <section
+      id="contact"
+      className="
+        relative
+        overflow-hidden
+        bg-gradient-to-b
+        from-bg-secondary
+        via-white
+        to-bg-secondary
+        py-24
+      "
+    >
+      {/* background glow */}
+      <div className="absolute left-0 top-0 h-72 w-72 rounded-full bg-blue-100/30 blur-3xl" />
 
-        <div className="order-1 lg:order-2">
+      <div className="section-container relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+
+        {/* HEADER */}
+        <div className="max-w-[680px]">
           <SectionHeader
             badge="Contact"
-            title="Let's build something great."
-            description="Open to collaborations, freelance opportunities, and full-time roles. Reach out anytime."
+            title="Let’s build something meaningful."
+            description="Open to backend opportunities, freelance collaborations, and innovative product development."
           />
+          <div className="mt-8 h-1 w-16 rounded-full bg-accent" />
+        </div>
 
-          <ul className="mt-8 space-y-4">
-            {links.map((link) => {
-              const Icon = link.icon;
-              return (
-              <li key={link.label}>
-                <a
-                  href={link.href}
-                  target={link.href.startsWith("mailto") ? undefined : "_blank"}
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-4 rounded-xl border border-border bg-white p-4 transition-colors hover:border-accent/30"
-                >
-                  <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-accent-light text-accent">
-                    <Icon className="h-4 w-4" />
-                  </span>
-                  <div>
-                    <p className="text-xs font-medium text-text-secondary">{link.label}</p>
-                    <p className="text-sm font-medium text-text-primary">{link.text}</p>
-                  </div>
-                </a>
-              </li>
-            );
-            })}
-            <li>
-              <a
+        {/* MAIN GRID */}
+        <div className="mt-16 grid gap-8 lg:grid-cols-[1fr_420px] items-start">
+
+          {/* LEFT CONTENT CONTAINER */}
+          <div className="flex flex-col gap-6">
+
+            {/* CONTACT CARDS GRID */}
+            <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3">
+              {links.map((link, i) => {
+                const Icon = link.icon;
+
+                return (
+                  <FadeUp key={link.label} delay={i * 0.08} className="h-full">
+                    <motion.a
+                      href={link.href}
+                      target={link.href.startsWith("mailto") ? undefined : "_blank"}
+                      rel="noopener noreferrer"
+                      whileHover={{ y: -5 }}
+                      transition={{ duration: 0.25 }}
+                      className="
+                        group
+                        relative
+                        flex
+                        h-full
+                        flex-col
+                        justify-between
+                        overflow-hidden
+                        rounded-[1.8rem]
+                        border
+                        border-slate-200/70
+                        bg-white
+                        p-6
+                        shadow-sm
+                        transition-all
+                        duration-300
+                        hover:shadow-xl
+                      "
+                    >
+                      {/* hover overlay */}
+                      <div
+                        className={`
+                          absolute
+                          inset-0
+                          bg-gradient-to-br
+                          ${link.color}
+                          opacity-0
+                          transition-opacity
+                          duration-300
+                          group-hover:opacity-100
+                        `}
+                      />
+
+                      <div className="relative z-10 flex h-full flex-col justify-between">
+                        <div>
+                          {/* icon */}
+                          <div
+                            className="
+                              flex
+                              h-12
+                              w-12
+                              items-center
+                              justify-center
+                              rounded-xl
+                              bg-blue-50
+                              text-accent
+                            "
+                          >
+                            <Icon className="h-5 w-5" />
+                          </div>
+
+                          {/* content */}
+                          <div className="mt-5">
+                            <p className="text-xs font-semibold uppercase tracking-wider text-text-secondary opacity-70">
+                              {link.label}
+                            </p>
+                            <h3 className="mt-2 text-base font-semibold text-text-primary break-all">
+                              {link.text}
+                            </h3>
+                          </div>
+                        </div>
+
+                        {/* button */}
+                        <motion.div
+                          whileHover={{ x: 4 }}
+                          className="
+                            mt-6
+                            inline-flex
+                            items-center
+                            gap-2
+                            text-sm
+                            font-semibold
+                            text-accent
+                          "
+                        >
+                          Open Link
+                          <FiArrowUpRight className="h-4 w-4" />
+                        </motion.div>
+                      </div>
+                    </motion.a>
+                  </FadeUp>
+                );
+              })}
+            </div>
+
+            {/* RESUME CARD */}
+            <FadeUp delay={0.3}>
+              <motion.a
                 href={SITE.resume}
-                className="flex items-center gap-4 rounded-xl border border-border bg-white p-4 transition-colors hover:border-accent/30"
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ y: -5 }}
+                transition={{ duration: 0.25 }}
+                className="
+                  group
+                  relative
+                  block
+                  overflow-hidden
+                  rounded-[1.8rem]
+                  border
+                  border-accent/20
+                  bg-white
+                  p-6
+                  shadow-sm
+                  transition-all
+                  duration-300
+                  hover:shadow-xl
+                "
               >
-                <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-accent-light text-accent">
-                  <FiDownload className="h-4 w-4" />
-                </span>
-                <div>
-                  <p className="text-xs font-medium text-text-secondary">Resume</p>
-                  <p className="text-sm font-medium text-text-primary">Download PDF</p>
-                </div>
-              </a>
-            </li>
-          </ul>
+                {/* overlay */}
+                <div
+                  className="
+                    absolute
+                    inset-0
+                    bg-gradient-to-br
+                    from-blue-50/70
+                    via-transparent
+                    to-violet-50/40
+                    opacity-0
+                    transition-opacity
+                    duration-300
+                    group-hover:opacity-100
+                  "
+                />
 
-          <FadeUp className="mt-10">
-            <form onSubmit={handleSubmit} className="card-premium space-y-4 p-6">
-              <div>
-                <label htmlFor="name" className="mb-1.5 block text-sm font-medium text-text-primary">
-                  Name
-                </label>
-                <input
-                  id="name"
-                  type="text"
-                  required
-                  value={form.name}
-                  onChange={(e) => setForm({ ...form, name: e.target.value })}
-                  className="w-full rounded-xl border border-border bg-white px-4 py-3 text-sm outline-none transition-colors focus:border-accent"
-                  placeholder="Your name"
-                />
-              </div>
-              <div>
-                <label htmlFor="email" className="mb-1.5 block text-sm font-medium text-text-primary">
-                  Email
-                </label>
-                <input
-                  id="email"
-                  type="email"
-                  required
-                  value={form.email}
-                  onChange={(e) => setForm({ ...form, email: e.target.value })}
-                  className="w-full rounded-xl border border-border bg-white px-4 py-3 text-sm outline-none transition-colors focus:border-accent"
-                  placeholder="you@email.com"
-                />
-              </div>
-              <div>
-                <label htmlFor="message" className="mb-1.5 block text-sm font-medium text-text-primary">
-                  Message
-                </label>
-                <textarea
-                  id="message"
-                  required
-                  rows={4}
-                  value={form.message}
-                  onChange={(e) => setForm({ ...form, message: e.target.value })}
-                  className="w-full resize-none rounded-xl border border-border bg-white px-4 py-3 text-sm outline-none transition-colors focus:border-accent"
-                  placeholder="Tell me about your project..."
-                />
-              </div>
-              <button type="submit" className="btn-primary w-full">
-                Send Message
-              </button>
-              <AnimatePresence>
-                {submitted && (
-                  <motion.p
-                    initial={{ opacity: 0, y: 8 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0 }}
-                    className="text-center text-sm text-accent"
+                <div
+                  className="
+                    relative
+                    z-10
+                    flex
+                    flex-col
+                    sm:flex-row
+                    sm:items-center
+                    justify-between
+                    gap-6
+                  "
+                >
+                  {/* LEFT */}
+                  <div className="flex items-start sm:items-center gap-5">
+                    <div
+                      className="
+                        flex
+                        h-14
+                        w-14
+                        shrink-0
+                        items-center
+                        justify-center
+                        rounded-2xl
+                        bg-accent-light
+                        text-accent
+                      "
+                    >
+                      <FiDownload className="h-6 w-6" />
+                    </div>
+
+                    <div>
+                      <p className="text-xs font-semibold uppercase tracking-wider text-text-secondary opacity-70">
+                        Resume
+                      </p>
+                      <h3 className="mt-1 text-xl font-bold text-text-primary">
+                        Download CV
+                      </h3>
+                      <p className="mt-1 text-sm text-text-secondary">
+                        Backend-focused MERN developer portfolio resume.
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* RIGHT */}
+                  <motion.div
+                    whileHover={{ x: 4 }}
+                    className="
+                      inline-flex
+                      self-start
+                      sm:self-auto
+                      items-center
+                      gap-2
+                      rounded-xl
+                      bg-slate-50
+                      group-hover:bg-white
+                      px-5
+                      py-3
+                      text-sm
+                      font-semibold
+                      text-accent
+                      shadow-sm
+                      transition-colors
+                    "
                   >
-                    Thanks! Your message has been noted. I'll get back to you soon.
-                  </motion.p>
-                )}
-              </AnimatePresence>
-            </form>
-          </FadeUp>
+                    Download
+                    <FiArrowUpRight className="h-4 w-4" />
+                  </motion.div>
+                </div>
+              </motion.a>
+            </FadeUp>
+          </div>
+
+          {/* RIGHT SVG/ILLUSTRATION CONTAINER */}
+          <motion.div
+            animate={{ y: [0, -8, 0] }}
+            transition={{
+              duration: 6,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+            className="
+              relative
+              hidden
+              h-full
+              min-h-[400px]
+              flex-col
+              items-center
+              justify-between
+              overflow-hidden
+              p-6
+              lg:flex
+            "
+          >
+            {/* status badge */}
+            <div className="flex w-full justify-end">
+              <motion.div
+                animate={{ y: [0, -2, 0] }}
+                transition={{
+                  duration: 3,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+                className="
+                  flex
+                  items-center
+                  gap-2
+                  rounded-full
+                  bg-white
+                  px-4
+                  py-1.5
+                  text-xs
+                  font-medium
+                  text-slate-700
+                  shadow-sm
+                  border
+                  border-slate-100
+                "
+              >
+                <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+                Available for Work
+              </motion.div>
+            </div>
+
+            {/* illustration */}
+            <div className="w-full max-w-[280px] my-4">
+              <img
+                src="/svg/contact.svg"
+                alt="Contact Illustration"
+                className="scale-105 object-contain mx-auto"
+              />
+            </div>
+
+            {/* bottom content */}
+            <div
+              className="
+                w-full
+                rounded-2xl
+                border
+                border-white/60
+                bg-white/80
+                p-4
+                text-center
+                text-sm
+                font-medium
+                text-slate-600
+                shadow-sm
+                backdrop-blur-md
+              "
+            >
+              Thanks for Visiting 🙏
+            </div>
+          </motion.div>
+
         </div>
       </div>
     </section>

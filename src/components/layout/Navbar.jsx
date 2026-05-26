@@ -24,7 +24,27 @@ export function Navbar() {
     return href;
   };
 
-  const handleNav = () => setOpen(false);
+  const handleNav = (e, href) => {
+    // If it's a hash link on the home page, handle scroll manually
+    if (href.startsWith("#") || href.startsWith("/#")) {
+      e.preventDefault(); // Stop default jump behavior
+      setOpen(false);     // Close the mobile menu
+
+      // Extract the pure ID selector (e.g., "#about")
+      const targetId = href.replace("/", "");
+      const element = document.querySelector(targetId);
+
+      if (element) {
+        // Small timeout allows the menu animation to start/complete so coordinates match up
+        setTimeout(() => {
+          element.scrollIntoView({ behavior: "smooth", block: "start" });
+        }, 150);
+      }
+    } else {
+      // Normal navigation for external links
+      setOpen(false);
+    }
+  };
 
   return (
     <>
@@ -190,7 +210,7 @@ export function Navbar() {
                   <a
                     key={link.label}
                     href={getHref(link.href)}
-                    onClick={handleNav}
+                    onClick={(e) => handleNav(e, computedHref)}
                     className="
                       flex
                       items-center

@@ -206,33 +206,37 @@ export function Navbar() {
               >
 
                 {/* NAV LINKS */}
-                {NAV_LINKS.map((link) => (
-                  <a
-                    key={link.label}
-                    href={getHref(link.href)}
-                    onClick={(e) => handleNav(e, computedHref)}
-                    className="
-                      flex
-                      items-center
-                      justify-center
-                      rounded-2xl
-                      border
-                      border-slate-200/70
-                      bg-slate-50
-                      px-4
-                      py-4
-                      text-sm
-                      font-medium
-                      text-text-primary
-                      transition-all
-                      duration-300
-                      hover:border-accent/20
-                      hover:bg-blue-50/50
-                    "
-                  >
-                    {link.label}
-                  </a>
-                ))}
+                {/* NAV LINKS inside Mobile Dropdown */}
+                {NAV_LINKS.map((link) => {
+                  const computedHref = getHref(link.href);
+                  return (
+                    <a
+                      key={link.label}
+                      href={computedHref}
+                      onClick={(e) => handleNav(e, computedHref)} // <-- Updated this line
+                      className="
+        flex
+        items-center
+        justify-center
+        rounded-2xl
+        border
+        border-slate-200/70
+        bg-slate-50
+        px-4
+        py-4
+        text-sm
+        font-medium
+        text-text-primary
+        transition-all
+        duration-300
+        hover:border-accent/20
+        hover:bg-blue-50/50
+      "
+                    >
+                      {link.label}
+                    </a>
+                  );
+                })}
 
                 {/* GITHUB */}
                 <a

@@ -380,7 +380,7 @@ export function Navbar() {
                 }}
 
                 src="./svg/myposter.jpeg"
-                alt="Profile"
+                alt="Portfolio of Shaik Musharaf, showcasing projects, skills, and experience in web development, React, Java, and problem solving."
 
                 className="
                   h-[75vh]

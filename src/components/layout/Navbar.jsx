@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { HiMenu, HiX } from "react-icons/hi";
@@ -13,6 +13,13 @@ export function Navbar() {
   const [open, setOpen] = useState(false);
 
   const [showProfile, setShowProfile] = useState(false);
+
+  // controls whether the navbar is visible (hides on scroll down, shows on scroll up)
+  const [navVisible, setNavVisible] = useState(true);
+  const lastScrollY = useRef(0);
+
+  // controls the "this name is clickable" hint — shown until the user discovers it
+  const [showNameHint, setShowNameHint] = useState(true);
 
   const location = useLocation();
 
@@ -46,34 +53,82 @@ export function Navbar() {
     }
   };
 
+  // Hide navbar on scroll down, reveal on scroll up
+  useEffect(() => {
+    lastScrollY.current = window.scrollY;
+
+    const handleScroll = () => {
+      const currentY = window.scrollY;
+      const diff = currentY - lastScrollY.current;
+
+      // ignore tiny jitters; only react past a small threshold
+      if (Math.abs(diff) < 4) return;
+
+      // always show navbar near the top of the page
+      if (currentY < 80) {
+        setNavVisible(true);
+      } else if (diff > 0) {
+        // scrolling down
+        setNavVisible(false);
+        // also close mobile menu if it was open
+        setOpen(false);
+      } else {
+        // scrolling up
+        setNavVisible(true);
+      }
+
+      lastScrollY.current = currentY;
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Dismiss the "clickable name" hint automatically after a while, or once clicked/profile opened
+  useEffect(() => {
+    const timer = setTimeout(() => setShowNameHint(false), 6000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    if (showProfile) setShowNameHint(false);
+  }, [showProfile]);
+
   return (
     <>
-      <header
+      {/* PROGRESS BAR — always visible, independent of navbar hide/show */}
+      <div className="fixed top-0 z-[60] h-1 w-full overflow-hidden bg-border">
+        <div
+          className="
+            h-full
+            bg-accent
+            transition-all
+            duration-200
+            ease-out
+          "
+          style={{ width: `${progress}%` }}
+        />
+      </div>
+
+      <motion.header
+        animate={{
+          y: navVisible ? 0 : "-100%",
+          opacity: navVisible ? 1 : 0,
+        }}
+        transition={{
+          duration: 0.4,
+          ease: [0.22, 1, 0.36, 1],
+        }}
         className={`
           fixed
-          top-0
+          top-1
           z-50
           w-full
-          transition-all
+          transition-colors
           duration-300
           ${scrolled ? "glass-nav" : "bg-transparent"}
         `}
       >
-        {/* progress */}
-        <div className="h-1 overflow-hidden bg-border">
-
-          <div
-            className="
-              h-full
-              bg-accent
-              transition-all
-              duration-200
-              ease-out
-            "
-            style={{ width: `${progress}%` }}
-          />
-        </div>
-
         {/* NAVBAR */}
         <nav
           className="
@@ -87,50 +142,118 @@ export function Navbar() {
         >
 
           {/* LOGO */}
-          <button
-            onClick={() => setShowProfile(true)}
-            className="
-              flex
-              gap-1
-              text-xl
-              font-bold
-              tracking-tight
-              text-text-primary
-            "
-          >
-            {SITE.logo.split("").map((char, index) => (
-              <motion.span
-                key={index}
-                initial={{
-                  y: -20,
-                  opacity: 0,
-                  scale: 0.8,
-                }}
+          <div className="relative">
+            <button
+              onClick={() => {
+                setShowProfile(true);
+                setShowNameHint(false);
+              }}
+              className="
+                relative
+                flex
+                gap-1
+                text-xl
+                font-bold
+                tracking-tight
+                text-text-primary
+              "
+            >
+              {SITE.logo.split("").map((char, index) => (
+                <motion.span
+                  key={index}
+                  initial={{
+                    y: -20,
+                    opacity: 0,
+                    scale: 0.8,
+                  }}
 
-                animate={{
-                  y: [0, -3, 0],
-                  opacity: 1,
-                  scale: 1,
-                }}
+                  animate={{
+                    y: [0, -3, 0],
+                    opacity: 1,
+                    scale: 1,
+                  }}
 
-                transition={{
-                  duration: 0.8,
-                  delay: index * 0.08,
+                  transition={{
+                    duration: 0.8,
+                    delay: index * 0.08,
 
-                  y: {
-                    duration: 2,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                    delay: index * 0.1,
-                  },
-                }}
+                    y: {
+                      duration: 2,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                      delay: index * 0.1,
+                    },
+                  }}
 
-                className="inline-block"
-              >
-                {char === " " ? "\u00A0" : char}
-              </motion.span>
-            ))}
-          </button>
+                  className="inline-block"
+                >
+                  {char === " " ? "\u00A0" : char}
+                </motion.span>
+              ))}
+
+              {/* clickable hint: pulsing dot */}
+              <AnimatePresence>
+                {showNameHint && (
+                  <motion.span
+                    initial={{ opacity: 0, scale: 0.5 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.5 }}
+                    className="absolute -right-2.5 -top-1 flex h-2.5 w-2.5"
+                  >
+                    <motion.span
+                      animate={{ scale: [1, 1.8, 1], opacity: [0.6, 0, 0.6] }}
+                      transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
+                      className="absolute inline-flex h-full w-full rounded-full bg-accent"
+                    />
+                    <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-accent" />
+                  </motion.span>
+                )}
+              </AnimatePresence>
+            </button>
+
+            {/* clickable hint: tooltip bubble */}
+            <AnimatePresence>
+              {showNameHint && (
+                <motion.div
+                  initial={{ opacity: 0, y: -6, scale: 0.95 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: -6, scale: 0.95 }}
+                  transition={{ duration: 0.3, delay: 0.4 }}
+                  className="
+                    absolute
+                    left-1/2
+                    top-full
+                    z-20
+                    mt-2
+                    -translate-x-1/2
+                    whitespace-nowrap
+                    rounded-full
+                    bg-slate-900
+                    px-3
+                    py-1.5
+                    text-[11px]
+                    font-medium
+                    text-white
+                    shadow-lg
+                  "
+                >
+                  Tap to view profile
+                  <span
+                    className="
+                      absolute
+                      -top-1
+                      left-1/2
+                      h-2
+                      w-2
+                      -translate-x-1/2
+                      rotate-45
+                      bg-slate-900
+                    "
+                  />
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
 
           {/* DESKTOP NAV */}
           <div className="hidden items-center gap-8 lg:flex">
@@ -291,7 +414,7 @@ export function Navbar() {
             </motion.div>
           )}
         </AnimatePresence>
-      </header>
+      </motion.header>
 
       {/* PROFILE REVEAL */}
       <AnimatePresence>

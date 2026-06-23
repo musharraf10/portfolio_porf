@@ -86,7 +86,7 @@ export function Navbar() {
 
   // Dismiss the "clickable name" hint automatically after a while, or once clicked/profile opened
   useEffect(() => {
-    const timer = setTimeout(() => setShowNameHint(false), 6000);
+    const timer = setTimeout(() => setShowNameHint(false), 4000);
     return () => clearTimeout(timer);
   }, []);
 

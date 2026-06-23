@@ -130,7 +130,7 @@ export function Contact() {
       "
               >
                 <img
-                  src="./svg/contact_image.png"
+                  src="./svg/shaik-musharaf.png"
                   alt="Shaik Musharaf"
                   className="
           h-full

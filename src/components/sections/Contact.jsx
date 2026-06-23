@@ -59,13 +59,116 @@ export function Contact() {
       <div className="section-container relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 
         {/* HEADER */}
-        <div className="max-w-[680px]">
-          <SectionHeader
-            badge="Contact"
-            title="Let’s build something meaningful."
-            description="Open to backend opportunities, freelance collaborations, and innovative product development."
-          />
-          <div className="mt-8 h-1 w-16 rounded-full bg-accent" />
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 items-center">
+          {/* Text content - spans 2 cols */}
+          <div className="sm:col-span-2 max-w-[680px]">
+            <SectionHeader
+              badge="Contact"
+              title="Let’s build something meaningful."
+              description="Open to backend opportunities, freelance collaborations, and innovative product development."
+            />
+            <div className="mt-8 h-1 w-16 rounded-full bg-accent" />
+          </div>
+
+          {/* Profile image - 1 col */}
+          <div className="flex justify-center sm:justify-end">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1, y: [0, -6, 0] }}
+              whileHover={{ scale: 1.06, rotate: 2 }}
+              whileTap={{ scale: 0.96 }}
+              transition={{
+                opacity: { duration: 0.6 },
+                scale: { duration: 0.6 },
+                y: { duration: 4, repeat: Infinity, ease: "easeInOut", delay: 0.6 },
+              }}
+              className="
+      group
+      relative
+      h-32
+      w-32
+      sm:h-36
+      sm:w-36
+      cursor-pointer
+      rounded-full
+    "
+            >
+              {/* rotating gradient ring - speeds up on hover */}
+              <motion.div
+                animate={{ rotate: 360 }}
+                transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
+                whileHover={{ transition: { duration: 1.5, repeat: Infinity, ease: "linear" } }}
+                className="
+        absolute
+        -inset-1
+        rounded-full
+        bg-[conic-gradient(from_0deg,theme(colors.accent),transparent_60%,theme(colors.accent))]
+        opacity-0
+        blur-[2px]
+        transition-opacity
+        duration-300
+        group-hover:opacity-70
+      "
+              />
+
+              {/* image container */}
+              <div
+                className="
+        relative
+        h-full
+        w-full
+        overflow-hidden
+        rounded-full
+        border-4
+        border-white
+        shadow-lg
+        ring-1
+        ring-slate-200/70
+        transition-shadow
+        duration-300
+        group-hover:shadow-2xl
+      "
+              >
+                <img
+                  src="./svg/contact_image.png"
+                  alt="Shaik Musharaf"
+                  className="
+          h-full
+          w-full
+          object-cover
+          transition-transform
+          duration-500
+          group-hover:scale-110
+        "
+                />
+              </div>
+
+              {/* subtle pulsing ring */}
+              <motion.div
+                animate={{ scale: [1, 1.15, 1], opacity: [0.4, 0, 0.4] }}
+                transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+                className="absolute inset-0 rounded-full border-2 border-accent/40 pointer-events-none"
+              />
+
+              {/* online status dot */}
+              <motion.span
+                animate={{ scale: [1, 1.2, 1] }}
+                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                className="
+        absolute
+        bottom-1
+        right-1
+        h-4
+        w-4
+        rounded-full
+        border-2
+        border-white
+        bg-emerald-500
+        shadow-sm
+      "
+              />
+            </motion.div>
+          </div>
         </div>
 
         {/* MAIN GRID */}

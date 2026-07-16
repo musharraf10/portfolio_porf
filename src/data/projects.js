@@ -14,6 +14,20 @@ export const PROJECTS = [
     accent: "#10B981",
   },
   {
+    id: "certificate_system",
+    title: "Qazi Office Management System",
+    description:
+      "Digital case and certificate management system for Qazi offices, built to generate Nikah certificates, manage records, preview, print, reprint, and handle supporting documents with a clean office workflow.",
+    category: "Full Stack",
+    featured: true,
+    size: "large",
+    tech: ["React", "Node.js", "Express", "MongoDB", "JWT", "Tailwind"],
+    github: "https://github.com/musharraf10/certificate_generator",
+    live: "https://qazisystem.netlify.app/",
+    image: "./svg/certificate-system.png",
+    accent: "#6366F1",
+  },
+  {
     id: "videocall",
     title: "Video Call Application",
     description:

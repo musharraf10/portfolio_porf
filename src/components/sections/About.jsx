@@ -111,7 +111,7 @@ export function About() {
 
           <div className="mt-8 space-y-4 leading-relaxed text-slate-500">
             <p>
-              I completed my <span className="font-semibold text-slate-800">B.Tech in Information Technology</span> in 2024 and started my journey into full stack development through the <span className="font-medium text-blue-600">MERN stack</span>.
+              I completed my <span className="font-semibold text-slate-800">B.Tech in Information Technology</span> and started my journey into full stack development through the <span className="font-medium text-blue-600">MERN stack</span>.
               While building projects, I explored concepts like <span className="text-slate-700">authentication, payment integration, WebSockets</span>, and <span className="font-medium text-blue-600">scalable backend architecture</span>.
               Every project helped me improve both technically and creatively.
             </p>

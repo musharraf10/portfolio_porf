@@ -440,15 +440,8 @@ export function Contact() {
 
             {/* illustration */}
             <div className="w-full max-w-[280px] my-4">
-              <img
-                src="/svg/contact.svg"
-                alt="Contact Illustration"
-                className="scale-105 object-contain mx-auto"
-              />
+              <div class="badge-base LI-profile-badge" data-locale="en_US" data-size="large" data-theme="light" data-type="VERTICAL" data-vanity="skmusharaf01" data-version="v1"><a class="badge-base__link LI-simple-link" href="https://in.linkedin.com/in/skmusharaf01?trk=profile-badge"></a></div>
             </div>
-
-            <div class="badge-base LI-profile-badge" data-locale="en_US" data-size="large" data-theme="light" data-type="VERTICAL" data-vanity="skmusharaf01" data-version="v1"><a class="badge-base__link LI-simple-link" href="https://in.linkedin.com/in/skmusharaf01?trk=profile-badge"></a></div>
-              
 
             {/* bottom content */}
             <div

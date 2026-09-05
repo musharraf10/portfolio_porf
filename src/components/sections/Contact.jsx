@@ -447,7 +447,7 @@ export function Contact() {
               />
             </div>
 
-            <div class="badge-base LI-profile-badge" data-locale="en_US" data-size="large" data-theme="light" data-type="VERTICAL" data-vanity="skmusharaf01" data-version="v1"><a class="badge-base__link LI-simple-link" href="https://in.linkedin.com/in/skmusharaf01?trk=profile-badge">Shaik Musharaf</a></div>
+            <div class="badge-base LI-profile-badge" data-locale="en_US" data-size="large" data-theme="light" data-type="VERTICAL" data-vanity="skmusharaf01" data-version="v1"><a class="badge-base__link LI-simple-link" href="https://in.linkedin.com/in/skmusharaf01?trk=profile-badge"></a></div>
               
 
             {/* bottom content */}
